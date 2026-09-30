@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tidewise | Coastal Karnataka Fish Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">⌁</span><span>Tidewise</span></div>
+      <div class="sidebar-label">COASTAL KARNATAKA</div>
+      <nav>
+        <button class="nav-item active" data-view="overview"><span>◫</span> Dashboard</button>
+        <button class="nav-item" data-view="forecast"><span>⌁</span> Price forecast</button>
+        <button class="nav-item" data-view="training"><span>◒</span> Model training</button>
+        <button class="nav-item" data-view="history"><span>▤</span> Price history</button>
+      </nav>
+      <div class="sidebar-footer"><div class="avatar">AK</div><div><strong>Analyst workspace</strong><small>Model connected</small></div><span class="online-dot"></span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div><span class="eyebrow">Market intelligence / Live model</span><h1>Coastal Karnataka fish prices</h1></div><div class="top-actions"><span class="live-badge"><i></i> API online</span><button class="icon-button" id="refreshButton" title="Refresh dashboard">↻</button></div></header>
+
+      <section class="hero-grid">
+        <div class="hero-copy"><p class="kicker">PRICE PREDICTION ENGINE</p><h2>Know the price before the boat reaches shore.</h2><p class="muted">Train on years of local market history. Add weather, landing volume, season, and location to make a decision with context.</p><div class="hero-actions"><button class="primary-button" data-scroll="forecast">Predict today's price <span>↗</span></button><button class="secondary-button" data-scroll="training">View training data</button></div></div>
+        <div class="hero-signal"><div class="signal-orbit orbit-one"></div><div class="signal-orbit orbit-two"></div><div class="signal-core"><span>₹</span><small>MODEL<br>OUTPUT</small></div><div class="signal-tag tag-top">Weather-aware</div><div class="signal-tag tag-bottom">6 coastal markets</div></div>
+      </section>
+
+      <section class="metric-grid" id="overview">
+        <article class="metric-card"><div class="metric-head"><span>Predicted price</span><span class="metric-icon teal">₹</span></div><strong id="predictedPrice">—</strong><small id="predictionRange">Loading model...</small></article>
+        <article class="metric-card"><div class="metric-head"><span>Demand index</span><span class="metric-icon green">↗</span></div><strong id="demandValue">650/1000</strong><small>Buyers + quantity sold + festival</small></article>
+        <article class="metric-card"><div class="metric-head"><span>Model accuracy</span><span class="metric-icon gold">◎</span></div><strong id="modelMae">—</strong><small id="modelRows">Chronological holdout</small></article>
+        <article class="metric-card"><div class="metric-head"><span>Weather signal</span><span class="metric-icon blue">☼</span></div><strong id="temperatureValue">—</strong><small id="weatherLabel">Open-Meteo current</small></article>
+      </section>
+
+      <section class="workspace-grid" id="forecast">
+        <article class="panel prediction-panel"><div class="panel-heading"><div><p class="kicker">TODAY'S DECISION</p><h3>Forecast scenario</h3></div><span class="model-chip">Random Forest</span></div><div class="form-grid"><label>Coastal market<select id="locationSelect"></select><button class="location-button" id="locationButton" type="button">⌖ Use my location</button></label><label>Fish species<select id="fishSelect"></select></label><label>Demand index<input id="demandInput" type="range" min="0" max="1000" value="650"><span class="range-value" id="demandOutput">650/1000</span></label><label>Landing volume (kg)<input id="volumeInput" type="number" min="10" max="10000" value="150"><small>Maximum 10,000 kg</small></label><label>Number of buyers<input id="buyersInput" type="number" min="0" max="10000" value="130"></label><label>Quantity sold history (kg)<input id="soldInput" type="number" min="0" max="10000" value="105"></label><label>Festival demand<input id="festivalInput" type="checkbox"><small>Festival or holiday period</small></label><label>Buying cost / kg (₹)<input id="buyCostInput" type="number" min="0" value="0"><small>0 = estimate from forecast</small></label><label>Handling + transport / kg (₹)<input id="operatingCostInput" type="number" min="0" value="35"></label></div><div class="input-actions"><button class="primary-button full-width" id="predictButton">Run prediction <span>↗</span></button><button class="secondary-button save-inputs" id="saveInputsButton">Save supply + buyer inputs</button></div><div class="prediction-result"><div><span class="result-label">RECOMMENDED SELLING RANGE</span><strong id="rangeValue">—</strong></div><div class="recommendation"><span class="recommendation-dot"></span><span id="recommendationText">Choose a location and species.</span></div></div></article>
+
+        <article class="panel weather-panel"><div class="panel-heading"><div><p class="kicker">CONDITIONS NOW</p><h3>Weather signals</h3></div><span class="weather-icon">☼</span></div><div class="weather-main"><strong id="weatherTemperature">—</strong><span>°C<br><small>current temperature</small></span></div><div class="weather-grid"><div><span>Rainfall</span><strong id="rainfallValue">—</strong></div><div><span>Wind</span><strong id="windValue">—</strong></div><div><span>Humidity</span><strong id="humidityValue">—</strong></div><div><span>Wave height</span><strong id="waveValue">—</strong></div></div><p class="weather-note">Weather is refreshed from the selected market's coordinates.</p></article>
+      </section>
+
+      <section class="decision-grid"><article class="panel profit-panel"><div class="panel-heading"><div><p class="kicker">PROFIT CALCULATOR</p><h3>Buy / sell decision</h3></div><span id="actionBadge" class="action-badge">—</span></div><div class="profit-stats"><div><span>Expected revenue</span><strong id="revenueValue">₹—</strong></div><div><span>Total cost</span><strong id="costValue">₹—</strong></div><div><span>Estimated profit</span><strong id="profitValue">₹—</strong></div><div><span>Margin</span><strong id="marginValue">—%</strong></div></div><div class="decision-line"><span id="decisionText">Run a scenario to see the decision.</span><span class="supply-pill">Supply forecast <strong id="supplyValue">— kg</strong></span></div></article><article class="panel alert-panel"><div class="panel-heading"><div><p class="kicker">PRICE ALERTS</p><h3>Risks and signals</h3></div><span class="alert-count" id="alertCount">0</span></div><div id="alertsList" class="alerts-list"><div class="empty-state">No alerts yet.</div></div></article></section>
+
+      <section class="insight-grid"><article class="panel market-panel"><div class="panel-heading"><div><p class="kicker">MARKET HEATMAP</p><h3>Best selling location</h3><p class="muted">Profit and demand outlook across the coast</p></div><span class="heat-legend">cool · hot</span></div><div id="marketCards" class="market-cards"></div></article><article class="panel explain-panel"><div class="panel-heading"><div><p class="kicker">EXPLAINABLE AI</p><h3>Why this forecast?</h3><p class="muted">Feature influence from the trained model</p></div></div><div id="explanationList" class="explanation-list"></div></article></section>
+
+      <section class="panel chart-panel" id="history"><div class="panel-heading"><div><p class="kicker">HISTORICAL SIGNAL</p><h3>Price movement</h3><p class="muted">Last 12 months for the selected market and species</p></div><span class="chart-legend"><i></i> Observed price</span></div><div class="chart-wrap"><svg id="priceChart" viewBox="0 0 900 260" preserveAspectRatio="none" aria-label="Historical price chart"></svg></div></section>
+
+      <section class="bottom-grid" id="training"><article class="panel training-panel"><div class="panel-heading"><div><p class="kicker">MODEL TRAINING</p><h3>What the model sees</h3></div><span class="trained-badge">● Trained</span></div><div class="feature-list"><div><span class="feature-icon">⌖</span><div><strong>Location</strong><small>Mangaluru · Udupi · Malpe · Karwar</small></div><em>categorical</em></div><div><span class="feature-icon">☼</span><div><strong>Weather</strong><small>Temperature · Rainfall · Wind · Humidity</small></div><em>numeric</em></div><div><span class="feature-icon">◷</span><div><strong>Seasonality</strong><small>Monsoon · month · weekend demand</small></div><em>derived</em></div><div><span class="feature-icon">▥</span><div><strong>Supply</strong><small>Landing volume · demand index</small></div><em>numeric</em></div></div></article><article class="panel api-panel"><div class="panel-heading"><div><p class="kicker">SYSTEM HEALTH</p><h3>Connected stack</h3></div></div><div class="stack-list"><div><span class="stack-status"></span><strong>Flask REST API</strong><small>Serving predictions</small></div><div><span class="stack-status"></span><strong>SQLite database</strong><small id="databaseStatus">Historical prices loaded</small></div><div><span class="stack-status"></span><strong>Random Forest ML</strong><small id="trainingStatus">Model artifact ready</small></div></div></article></section>
+      <footer>© 2026 Tidewise · AI-assisted market intelligence for Coastal Karnataka</footer>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

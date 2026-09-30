@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+*.pyc
+fish_prices.db
+models/*.joblib
+models/metrics.json
